@@ -1,0 +1,17 @@
+html {
+    background: lightgray;
+}
+
+td {
+    padding: .5rem;
+    text-align: left;
+    border: solid;
+    border-radius: .5rem;
+}
+
+th {
+    text-align: center;
+    font-size: 1.25rem;
+    border: solid;
+    border-radius: .5rem;
+}
