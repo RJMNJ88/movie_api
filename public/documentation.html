@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="../CSS/style.css">
+
     <title>Movie API</title>
 </head>
 
@@ -23,6 +26,149 @@
                 and create lists of their favorite movies, which will be saved to the database 
                 for later use an reference by the user.
             </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th><b>Request</b></th>
+                        <th><b>URL</b></th>
+                        <th><b>HTTP Method</b></th>
+                        <th><b>URL Parameters</b></th>
+                        <th><b>Request Body Format</b></th>
+                        <th><b>Response Body Format</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Return all movies</b></td>
+                        <td>/movies</td>
+                        <td>GET</td>
+                        <td>/movies</td>
+                        <td>None</td>
+                        <td>A JSON object containing a list of movies</td>
+                    </tr>
+                    <tr>
+                        <td><b>Return a single movie</b></td>
+                        <td>/movies/[title]</td>
+                        <td>GET</td>
+                        <td>/movies/:title</td>
+                        <td>None</td>
+                        <td>
+                            A JSON object containing data about a single movie: <br>
+                            {<br>
+                                title: 'The Hobbit: An Unexpected Journey',<br>
+                                genre: ['Fantasy'],<br>
+                                released: 2012,<br>
+                                director: <br>
+                                    {<br>
+                                        name: 'Peter Jackson',<br>
+                                        born: 'October 31, 1961',<br>
+                                        country: 'New Zealand'<br>
+                                    } <br>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Return movies by genre</b></td>
+                        <td>/genre</td>
+                        <td>GET</td>
+                        <td>/genre</td>
+                        <td>None</td>
+                        <td>
+                            A JSON object containing a list of movies <br> 
+                            matching a particular genre
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Return movies by director</b></td>
+                        <td>/director</td>
+                        <td>GET</td>
+                        <td>/director</td>
+                        <td>None</td>
+                        <td>
+                            A JSON object containing a list of movies <br> 
+                            by a particular director
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Register new user</b></td>
+                        <td>/users</td>
+                        <td>POST</td>
+                        <td>/users</td>
+                        <td>
+                            A JSON object holding data about the <br> 
+                            user, structured like: <br>
+                            { <br>
+                                username: "exampleUser", <br>
+                                password: "examplePassword", <br>
+                                email: "exampleEmail@email.com" <br>
+                            }
+                        </td>
+                        <td>
+                            A text response indicating that the new user <br>
+                            has been successfully registered.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Update user info</b></td>
+                        <td>/users/[userinfo]</td>
+                        <td>PUT</td>
+                        <td>/users/:userinfo</td>
+                        <td>None</td>
+                        <td>
+                            A text response indicating that the user info <br>
+                            has been successfully updated.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Add movie to favorites</b></td>
+                        <td>/users/[userinfo]/movies/[title]</td>
+                        <td>POST</td>
+                        <td>/users/:userinfo/movies/:title</td>
+                        <td>
+                            A JSON object holding data about the <br> 
+                            user, structured like: <br>
+                            {<br>
+                                title: 'The Hobbit: An Unexpected Journey',<br>
+                                genre: ['Fantasy'],<br>
+                                released: 2012,<br>
+                                director: <br>
+                                    {<br>
+                                        name: 'Peter Jackson',<br>
+                                        born: 'October 31, 1961',<br>
+                                        country: 'New Zealand'<br>
+                                    } <br>
+                            }
+                        </td>
+                        <td>
+                            A text response indicating that the movie was <br>
+                            successfully added.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Remove movie from favorites</b></td>
+                        <td>/users/[userinfo]/movies/[title]</td>
+                        <td>DELETE</td>
+                        <td>/users/:userinfo/movies/:title</td>
+                        <td>None</td>
+                        <td>
+                            A text response indicating that the movie was <br>
+                            successfully removed.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Delete user account</b></td>
+                        <td>/users/[userinfo]</td>
+                        <td>DELETE</td>
+                        <td>/users/:userinfo</td>
+                        <td>None</td>
+                        <td>
+                            A text response indicating that the user <br>
+                            account had been deleted.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </body>
 
         <footer class="footer">
