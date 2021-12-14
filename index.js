@@ -20,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('common'));
 
 //Connect to my database
-mongoose.connect('mongodb://localhost:27017/myFilmDB', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/[myFilmDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
 //App Requests Using Mongoose and MongoDB
 
@@ -160,7 +160,7 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
 
 //Delete a user by username
 app.delete('/users/:Username', (req, res) => {
-    Users.findByIdAndRemove({Username: req.params.Username})
+    Users.findOne({Username: req.params.Username})
     .then((user) => {
         if(!user) {
             res.status(400).send(req.params.Username + ' was not found.');
