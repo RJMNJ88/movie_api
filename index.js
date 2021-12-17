@@ -1,4 +1,4 @@
-// const { response } = require('express');
+const { response } = require('express');
 
 const express = require('express'),
     morgan = require('morgan'),
@@ -155,7 +155,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {sessi
 //Delete a movie from a user's list of favorite movies
 app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
     Users.findOneAndUpdate({Username: req.params.Username}, {
-        $push: {FavoriteMovies: req.params.MovieID}
+        $pull: {FavoriteMovies: req.params.MovieID}
     },
     {new: true},
     (err, updatedUser) => {
