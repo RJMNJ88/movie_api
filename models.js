@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { stringify } = require('uuid');
+const bcrypt = require('bcrypt');
 
 //Define schemas
 let movieSchema = mongoose.Schema({
@@ -24,6 +25,15 @@ let userSchema = mongoose.Schema({
     Birthday: Date,
     FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Movies'}]
 });
+
+//Password Hashing
+userSchema.statics.hashPassword = (password) => {
+    return bcrypt.hashSync(password, 10);
+};
+
+userSchema.methods.validatePassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
 
 let genreSchema = mongoose.Schema({
     Name: {type: String, required: true},
