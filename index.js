@@ -11,26 +11,31 @@ const express = require('express'),
     Genres = Models.Genres,
     Directors = Models.Directors;
 
-
 const app = express();
+const { check, validationResult } = require('express-validator');
 
 //Connect to my database
 mongoose.connect('mongodb://localhost:27017/[myFilmDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
+//Body-parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Express
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+//CORs
+const cors = require('cors');
+app.use(cors());
 
+//Auth.js
 let auth = require('./auth.js')(app);
 const passport = require('passport');
 require('./passport.js');
 
 //Log requests using Morgan
 app.use(morgan('common'));
-
 
 //App Requests Using Mongoose and MongoDB
 
@@ -40,7 +45,23 @@ app.get('/', (req, res) => {
 });
 
 //Add a new user
-app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+app.post('/users',   
+    [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Password', 'Password must be 8 characters long').isLength({min: 8}),
+        check('email', 'Email does not appear to be valid').isEmail()
+    ], (req, res) => {
+
+    // check the validation object for errors
+    let errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    let hashedPassword = users.hashPassword(req.body.Password);
     Users.findOne({Username: req.body.Username})
     .then((user) => {
         if(user) {
@@ -49,7 +70,7 @@ app.post('/users', passport.authenticate('jwt', {session: false}), (req, res) =>
             Users
             .create({
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassword,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })
@@ -235,10 +256,10 @@ app.get('/directors/:Name', passport.authenticate('jwt', {session: false}), (req
 
 
 //Listen for requests
-app.listen(8080, () => {
-    console.log('Your app is listening on Port 8080.');
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });
-
 
 
 
