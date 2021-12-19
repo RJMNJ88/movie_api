@@ -14,8 +14,12 @@ const express = require('express'),
 const app = express();
 const { check, validationResult } = require('express-validator');
 
-//Connect to my database
-mongoose.connect('mongodb://localhost:27017/[myFilmDB]', { useNewUrlParser: true, useUnifiedTopology: true });
+//Connect to my database (local)
+// mongoose.connect('mongodb://localhost:27017/[myFilmDB]', { useNewUrlParser: true, useUnifiedTopology: true });
+
+//Connect to my database (via API/Heroku)
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
 
 //Body-parser
 app.use(bodyParser.json());
