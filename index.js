@@ -17,8 +17,11 @@ const { check, validationResult } = require('express-validator');
 //Connect to my database (local)
 // mongoose.connect('mongodb://localhost:27017/[myFilmDB]', { useNewUrlParser: true, useUnifiedTopology: true });
 
-//Connect to my database (via API/Heroku)
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//Connect to my database: fathomless_forest_27678
+// mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+//Connect to my database: blooming-wildwood-80599 
+mongoose.connect(process.env.connection_uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 //Body-parser
